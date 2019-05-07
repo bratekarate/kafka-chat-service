@@ -1,0 +1,30 @@
+debug: true
+
+kafka-string-serializer: &kafka-string-serializer org.apache.kafka.common.serialization.StringSerializer
+kafka-string-deserializer: &kafka-string-deserializer org.apache.kafka.common.serialization.StringDeserializer
+kafka-json-deserializer: &kafka-json-deserializer org.springframework.kafka.support.serializer.JsonDeserializer
+kafka-json-serializer: &kafka-json-serializer org.springframework.kafka.support.serializer.JsonSerializer
+
+#kafka-byte-serializer: &kafka-byte-serializer org.apache.kafka.common.serialization.ByteArraySerializer
+#kafka-byte-deserializer: &kafka-byte-deserializer org.apache.kafka.common.serialization.ByteArrayDeserializer
+
+kafka-broker: &kafka-broker localhost:9092
+
+spring:
+  kafka:
+    producer:
+      bootstrap-servers: *kafka-broker
+      key-serializer: *kafka-string-serializer
+      value-serializer: *kafka-json-serializer
+
+    consumer:
+      group-id: test
+      bootstrap-servers: *kafka-broker
+      key-deserializer: *kafka-string-deserializer
+      value-deserializer: *kafka-json-deserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: 'com.example.kafka.messaging'
+

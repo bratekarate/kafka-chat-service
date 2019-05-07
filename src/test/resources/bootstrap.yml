@@ -1,0 +1,6 @@
+spring:
+  cloud:
+    zookeeper:
+      discovery:
+        enabled: false
+      enabled: false
